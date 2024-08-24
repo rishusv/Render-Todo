@@ -1,0 +1,55 @@
+*{
+    margin: 0px;
+    padding:0px;  
+}
+.container {
+    margin: 20px;
+}
+
+.todo {
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.new-div-ele {
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    display: flex;
+    align-items: center;
+}
+
+.text-area {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.edit-mode {
+    display: none;
+    width: 100%;
+}
+
+.new-div-ele.editing .text-area {
+    display: none;
+}
+
+.new-div-ele.editing .edit-mode {
+    display: flex;
+}
+
+.new-div-ele input {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.new-div-ele button {
+    background-color: lightcoral;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}

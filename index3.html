@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="todo">
+            <input type="text" placeholder="Enter your text">
+            <button onclick="addTodo()">Add ToDo</button>
+
+        </div>
+    </div>
+    <script>
+        let todos = [];
+        function addTodo() {
+            if (document.querySelector("input").value.trim() == "") {
+                alert("Please enter a valid text")
+            }
+            else {
+                todos.push({
+                    description: document.querySelector("input").value.trim(),
+                })
+                document.querySelector('input').value = '';
+                render();
+            }
+        }
+
+        function toDoComponent(todo, index) {
+            const spanEle = document.createElement("span");
+            const inputEle = document.createElement("input");
+            const deleteEle = document.createElement("button");
+            const editEle = document.createElement("button");
+
+            spanEle.textContent = todo;
+            inputEle.value = todo;
+            deleteEle.textContent = "Delete";
+            editEle.textContent = "Edit";
+
+            const newDivEle = document.createElement("div");
+            newDivEle.classList.add('new-div-ele');
+
+            const textArea = document.createElement("div");
+            textArea.classList.add('text-area');
+            textArea.appendChild(spanEle);
+            newDivEle.appendChild(textArea);
+
+            const editModeDiv = document.createElement("div");
+            editModeDiv.classList.add('edit-mode');
+            editModeDiv.appendChild(inputEle);
+            newDivEle.appendChild(editModeDiv);
+
+            newDivEle.appendChild(editEle);
+            newDivEle.appendChild(deleteEle);
+
+            // Add event listeners for edit and delete
+            editEle.addEventListener('click', () => editText(newDivEle, index));
+            deleteEle.addEventListener('click', () => deleteTodo(index));
+
+            return newDivEle;
+        }
+        function editText(div, index) {
+            const isEditing = div.classList.toggle('editing');
+            const inputEle = div.querySelector('input');
+            const spanEle = div.querySelector('span');
+            const editEle = div.querySelector('button');
+
+            if (isEditing) {
+                editEle.textContent = "Save";
+                inputEle.focus();
+            } else {
+                todos[index].description = inputEle.value; // Update todo description
+                spanEle.textContent = todos[index].description; // Update span text
+                editEle.textContent = "Edit";
+            }
+        }
+
+        function deleteTodo(index) {
+            todos.splice(index, 1); // Remove the item from the array
+            render(); // Re-render the updated list
+        }
+
+        function render() {
+            console.log(todos);
+            const existing_ele = document.querySelectorAll('.new-div-ele');
+            existing_ele.forEach((ele) => ele.remove());
+
+            for (let i = 0; i < todos.length; i++) {
+                const todo = todos[i].description;
+                const component_data = toDoComponent(todo, i);
+
+                document.querySelector(".todo").appendChild(component_data);
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>
